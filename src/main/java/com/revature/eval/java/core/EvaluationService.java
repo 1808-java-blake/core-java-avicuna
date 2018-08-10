@@ -1,5 +1,9 @@
 package com.revature.eval.java.core;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -205,7 +209,8 @@ public class EvaluationService {
 		// Replace all upper-case and lower-case letters with the empty string
 		newstring = newstring.replaceAll("[A-Za-z]", "");
 
-		System.out.println(newstring);
+		//System.out.println(newstring);
+		
 		// Check if first letter of string is '1' and length is 11 to ensure it is a valid phone number
 		if(newstring.charAt(0) == '1' && newstring.length() == 11) {
 			newstring = newstring.replaceFirst("1", "");
@@ -214,7 +219,7 @@ public class EvaluationService {
 			throw new IllegalArgumentException();
 		}
 		
-		System.out.println(newstring.length());
+		//System.out.println(newstring.length());
 
 		return newstring;
 	}
@@ -234,7 +239,7 @@ public class EvaluationService {
 		list = string.split(" ");
 		list = string.split("[,]\n");
 		for(String a: list) {
-			System.out.println(a);
+			//System.out.println(a);
 			if (!myMap.containsKey(a)) {
 				myMap.put(a, 1);
 			}
@@ -356,7 +361,7 @@ public class EvaluationService {
             }
             string += s.substring(cut) + beforVowel + "ay ";
         }
-		System.out.println(string);
+		//System.out.println(string);
 		return string;
 	}
 
@@ -391,8 +396,8 @@ public class EvaluationService {
 			if (modulo == 0)
 				break;
 			sum += Math.pow(modulo, count);
-			System.out.println("Quotient: " + quotient + ", Modulo: " + modulo);
-			System.out.println(sum);
+			//System.out.println("Quotient: " + quotient + ", Modulo: " + modulo);
+			//System.out.println(sum);
 			modulo = quotient % 10;
 			quotient = quotient / 10;
 		}
@@ -412,20 +417,20 @@ public class EvaluationService {
 	public List<Long> calculatePrimeFactorsOf(long l) {
 		List<Long> factors = new ArrayList<Long>();
 		while(l % 2 == 0) {
-			System.out.println(2 + " ");
+			//System.out.println(2 + " ");
 			factors.add(2L);
 			l = l / 2;
 		}
 		
 		for (long i = 3; i <= Math.sqrt(l); i++) {
 			while(l % i == 0) {
-				System.out.println(i + " ");
+				//System.out.println(i + " ");
 				factors.add(i);
 				l /= i;
 			}
 		}
 		if(l > 2) {
-			System.out.println(l);
+			//System.out.println(l);
 			factors.add(l);
 		}
 		return factors;
@@ -475,19 +480,19 @@ public class EvaluationService {
 					result.append(string.charAt(i));
 				}
 				else if (Character.isUpperCase(string.charAt(i)) && string.charAt(i) != ' ') {
-					System.out.println("upper case check");
+					//System.out.println("upper case check");
 					char ch = (char)(((int)string.charAt(i) +
 									key - 65) % 26 + 65);
 					result.append(ch);
 					}
 				else if (!Character.isUpperCase(string.charAt(i)) && string.charAt(i) != ' '){
-					System.out.println("lower case check");
+					//System.out.println("lower case check");
 					char ch = (char)(((int)string.charAt(i) +
 									key - 97) % 26 + 97);
 					result.append(ch);
 				}
 			}
-			System.out.println(result.toString());
+			//System.out.println(result.toString());
 			return result.toString();
 		}
 
@@ -523,12 +528,12 @@ public class EvaluationService {
 		for (j = 5; count <= i; j+=2) {
 
 			if(j % 3 != 0 && j % 5 != 0 && j % Math.sqrt(j) != 0) {
-				System.out.println(j + " : " + count);
+				//System.out.println(j + " : " + count);
 				count++;
 			}
 		}
 		j = j - 2;
-		System.out.println("Prime " + --count + " = " + j);
+		//System.out.println("Prime " + --count + " = " + j);
 		return j;
 	}
 
@@ -635,11 +640,11 @@ public class EvaluationService {
 			//System.out.println("Checking number: " + currentNum + ", Current sum: " + sum);
 		}
 		if(sum % 11 == 0) {
-			System.out.println("Valid!");
+			//System.out.println("Valid!");
 			return true;
 		}
 			
-		System.out.println("Invalid!");	
+		//System.out.println("Invalid!");	
 		return false;
 	}
 
@@ -663,11 +668,11 @@ public class EvaluationService {
 				continue;
 			}
 			else {
-				System.out.println("The given string is not a Pangram!");
+				//System.out.println("The given string is not a Pangram!");
 				return false;
 			}
 		}
-		System.out.println("The given string is a Pangram!");
+		//System.out.println("The given string is a Pangram!");
 		return true;
 	}
 
@@ -680,9 +685,15 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		// TODO Write an implementation for this method declaration
-		return null;
-	}
+        //In case,time not included
+        if(given instanceof LocalDate) {
+            LocalDateTime time = LocalDateTime.of((LocalDate) given, LocalTime.MIN);
+            return time.plus(Duration.ofSeconds(1000000000l));
+        }
+        //if time is included
+        LocalDateTime time = LocalDateTime.from(given);
+        return time.plus(Duration.ofSeconds(1000000000l));
+    }
 
 	/**
 	 * 18. Given a number, find the sum of all the unique multiples of particular
@@ -704,12 +715,12 @@ public class EvaluationService {
 			for(int k = 0; k < set.length; k++) {
 				if(j % set[k] == 0) {
 					sum += j;
-					System.out.println(j);
+					//System.out.println(j);
 					break;
 				}
 			}
 		}
-		System.out.println(sum);
+		//System.out.println(sum);
 		return sum;
 	}
 
@@ -762,7 +773,7 @@ public class EvaluationService {
 		for(String a: stringList) {
 			newString += a;
 		}
-		System.out.println(newString);
+		//System.out.println(newString);
 		
 		for(int i = 0; i < newString.length(); i++) {
 			c = newString.charAt(i);
@@ -787,15 +798,15 @@ public class EvaluationService {
 						currentNum = currentNum - 9;
 				}
 			}
-			System.out.println(currentNum);
+			//System.out.println(currentNum);
 			sum += currentNum;
 		}
-		System.out.println(sum);
+		//System.out.println(sum);
 		if(sum % 10 == 0) {
-			System.out.println("It's Luhn Valid!");
+			//System.out.println("It's Luhn Valid!");
 			return true;
 		}
-		System.out.println("It's not Luhn Valid!");
+		//System.out.println("It's not Luhn Valid!");
 		return false;
 	}
 
@@ -857,7 +868,7 @@ public class EvaluationService {
 				answer = left / right;
 			}
 		}
-		System.out.println(answer);
+		//System.out.println(answer);
 		return answer;
 	}
 
