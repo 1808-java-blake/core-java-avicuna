@@ -465,29 +465,26 @@ public class EvaluationService {
 		}
 
 		public String rotate(String string) {
-			StringBuffer result = new StringBuffer();
+			String newString = "";
 			String other = "1234567890,.;:'!";
 
-			for (int i=0; i < string.length(); i++)
-			{
-				if (string.charAt(i) == ' ' || other.contains("" + string.charAt(i))) {
-					result.append(string.charAt(i));
+			for (int i=0; i < string.length(); i++)	{
+				if (string.charAt(i) == ' ' || other.contains(Character.toString(string.charAt(i)))) {
+					newString += string.charAt(i);
 				}
 				else if (Character.isUpperCase(string.charAt(i)) && string.charAt(i) != ' ') {
-					//System.out.println("upper case check");
 					char ch = (char)(((int)string.charAt(i) +
 									key - 65) % 26 + 65);
-					result.append(ch);
+					newString += ch;
 					}
-				else if (!Character.isLowerCase(string.charAt(i)) && string.charAt(i) != ' '){
-					//System.out.println("lower case check");
+				else if (!Character.isUpperCase(string.charAt(i)) && string.charAt(i) != ' '){
 					char ch = (char)(((int)string.charAt(i) +
 									key - 97) % 26 + 97);
-					result.append(ch);
+					newString += ch;
 				}
 			}
-			//System.out.println(result.toString());
-			return result.toString();
+			System.out.println(newString);
+			return newString;
 		}
 
 	}
