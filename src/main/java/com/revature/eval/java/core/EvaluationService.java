@@ -289,27 +289,78 @@ public class EvaluationService {
 	static class BinarySearch<T> {
 		private List<T> sortedList;
 
-		public int indexOf(T t) {	
-			int middle = 0; 
-			int start;  
-			int last; 
-			// assigns temp to the index of the middle element in sortedList
-			/*middle = sortedList.size()/2;
-			while(start < last) {
-				if(t == sortedList.get(middle))
-					return middle;
-				else if (t < sortedList.get(middle)) {
-					last = middle;
-					middle = middle / 2;
-				}
-				else if (t > sortedList.get(middle)) {
-					start = middle;
-					middle = middle / 2;
-				}
-			}*/
-				
-			return middle;
-		}
+//		public int indexOf(T t) {	
+////			int middle = 0; 
+////			int start;  
+////			int last; 
+//			// assigns temp to the index of the middle element in sortedList
+//			
+//			
+//			
+//			
+//			/*middle = sortedList.size()/2;
+//			while(start < last) {
+//				if(t == sortedList.get(middle))
+//					return middle;
+//				else if (t < sortedList.get(middle)) {
+//					last = middle;
+//					middle = middle / 2;
+//				}
+//				else if (t > sortedList.get(middle)) {
+//					start = middle;
+//					middle = middle / 2;
+//				}
+//			}*/
+//				
+////			return middle;
+//		}
+		
+	   public int indexOf(T t) {
+            // TODO Write an implementation for this method declaration
+            int first = 0;
+            int last = sortedList.size()-1;
+            int key;
+            if(t instanceof String)
+            	key = Integer.parseInt((String) t);
+            else
+                key = (int) t;
+            int middle = 0;
+            int found = 0;
+            int midElement = 0;
+            while(first <= last) {
+                middle = (first + last)/2;
+                if(sortedList.get(middle) instanceof String) {
+                	midElement = Integer.parseInt((String) sortedList.get(middle));
+                	if(midElement > key) {
+                        last = middle - 1;
+                    }
+                    else if(midElement < key) {
+                        first = middle + 1;
+                    }
+                    else if(midElement == key) {
+                        found = middle;
+                        break;
+                    }
+                }
+                else {
+                	System.out.println("its not a string");
+                	midElement = (int) sortedList.get(middle);
+                    
+                    if(midElement > key) {
+                        last = middle - 1;
+                    }
+                    else if(midElement < key) {
+                        first = middle + 1;
+                    }
+                    else if(midElement == key) {
+                        found = middle;
+                        break;
+                    }
+                }
+                
+            }
+            return found;
+        }
 
 		public BinarySearch(List<T> sortedList) {
 			super();
@@ -483,7 +534,6 @@ public class EvaluationService {
 					newString += ch;
 				}
 			}
-			System.out.println(newString);
 			return newString;
 		}
 
