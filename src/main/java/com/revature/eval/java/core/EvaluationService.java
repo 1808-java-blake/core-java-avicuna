@@ -116,7 +116,7 @@ public class EvaluationService {
 
 		public boolean isScalene() {
 			// Check if one no sides are equal
-			if(sideOne != sideTwo & sideTwo != sideThree & sideOne == sideThree) {
+			if(sideOne != sideTwo && sideTwo != sideThree && sideOne != sideThree) {
 				return true;
 			}
 			return false;
@@ -355,13 +355,9 @@ public class EvaluationService {
             	beforVowel += s.charAt(cut);
                 cut++;
             }
-            if (cut == 0) {
-            	 cut = 1;
-                 s += s.charAt(0);
-            }
             string += s.substring(cut) + beforVowel + "ay ";
         }
-		//System.out.println(string);
+		string = string.trim();
 		return string;
 	}
 
@@ -396,8 +392,6 @@ public class EvaluationService {
 			if (modulo == 0)
 				break;
 			sum += Math.pow(modulo, count);
-			//System.out.println("Quotient: " + quotient + ", Modulo: " + modulo);
-			//System.out.println(sum);
 			modulo = quotient % 10;
 			quotient = quotient / 10;
 		}
@@ -471,7 +465,7 @@ public class EvaluationService {
 		}
 
 		public String rotate(String string) {
-			StringBuffer result= new StringBuffer();
+			StringBuffer result = new StringBuffer();
 			String other = "1234567890,.;:'!";
 
 			for (int i=0; i < string.length(); i++)
@@ -485,7 +479,7 @@ public class EvaluationService {
 									key - 65) % 26 + 65);
 					result.append(ch);
 					}
-				else if (!Character.isUpperCase(string.charAt(i)) && string.charAt(i) != ' '){
+				else if (!Character.isLowerCase(string.charAt(i)) && string.charAt(i) != ' '){
 					//System.out.println("lower case check");
 					char ch = (char)(((int)string.charAt(i) +
 									key - 97) % 26 + 97);
@@ -513,15 +507,12 @@ public class EvaluationService {
 	public int calculateNthPrime(int i) {
 		int j = 3;
 		if(i == 1) {
-			System.out.println(2);
 			return 2;
 		}
 		else if(i == 2) {
-			System.out.println(3);
 			return 3;
 		}
 		else if(i == 3) {
-			System.out.println(5);
 			return 5;
 		}
 		int count = 4;
@@ -571,7 +562,23 @@ public class EvaluationService {
 		 */
 		public static String encode(String string) {
 			// TODO Write an implementation for this method declaration
-			return null;
+			String numbers = "0123456789";
+			String newString = string.replaceAll("[ ,.]", "");
+			newString = newString.toLowerCase();
+			String newString2 = "";
+			for(int i = 0; i < newString.length(); i++) {
+				int k = ((int)newString.charAt(i)) - 97;
+				if((i % 5) == 0 && i != 0) {
+					newString2+= " ";
+				}
+				else if (numbers.contains(Character.toString(newString.charAt(i)))) {
+					newString2 +=  Character.toString(newString.charAt(i));
+					continue;
+				}
+				newString2 += (char)(122 - k);
+			}			
+			
+			return newString2;
 		}
 
 		/**
@@ -581,8 +588,19 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String decode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			String numbers = "0123456789";
+			string = string.replaceAll(" ", "");
+			int k;
+			String newString = "";
+			for(int i = 0; i < string.length(); i++) {
+				if (numbers.contains(Character.toString(string.charAt(i)))) {
+					newString +=  (Character.toString(string.charAt(i)));
+					continue;
+				}
+				k = 122 - ((int)string.charAt(i));
+				newString += (char)(97 + k);
+			}
+			return newString;
 		}
 	}
 
@@ -621,7 +639,6 @@ public class EvaluationService {
 		}
 		if(newString.length() != 10)
 			return false;
-//		System.out.println(newString);
 		char c;
 		String temp;
 		for(int i = 10; i > 0; i--) {
@@ -631,20 +648,16 @@ public class EvaluationService {
 			}
 			else if(c == 'X') {
 				sum += (10 * i);
-				//System.out.println("Checking number: " + 10 + ", Current sum: " + sum);
 				break;
 			}
 			temp = Character.toString(c);
 			currentNum = Integer.parseInt(temp);
 			sum += (currentNum * i);
-			//System.out.println("Checking number: " + currentNum + ", Current sum: " + sum);
 		}
 		if(sum % 11 == 0) {
-			//System.out.println("Valid!");
 			return true;
 		}
 			
-		//System.out.println("Invalid!");	
 		return false;
 	}
 
